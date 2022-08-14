@@ -1,4 +1,3 @@
-
 ﻿using _3DModelMax.Host.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +12,7 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        var connectionString = "fake-db-connection";
+        var connectionString = Configuration.GetConnectionString("DefaultConnectionString");
         services.AddControllers();
         services.AddDbContext<AddDbContext>(contextOptions => contextOptions.UseSqlServer(connectionString));
     }

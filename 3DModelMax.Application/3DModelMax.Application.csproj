@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\3DModelMax.Domain\3DModelMax.Domain.csproj" />
+    <ProjectReference Include="..\3DModelMax.Persistence\3DModelMax.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>
