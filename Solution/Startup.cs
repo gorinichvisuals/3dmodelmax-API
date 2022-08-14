@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 public class Startup
 {
-    public string ConnectionString { get; set; }
+    private string ConnectionString { get; set; }
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
@@ -15,7 +15,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddControllers();
-        services.AddDbContext<AppDBContext>(contextOptions => contextOptions.UseSqlServer(ConnectionString));
+        services.AddDbContext<AddDbContext>(contextOptions => contextOptions.UseSqlServer(ConnectionString));
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
