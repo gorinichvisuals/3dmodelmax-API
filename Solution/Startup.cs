@@ -2,20 +2,19 @@
 using Microsoft.EntityFrameworkCore;
 
 public class Startup
-{
-    private string ConnectionString { get; set; }
+{   
     public Startup(IConfiguration configuration)
-    {
+    {      
         Configuration = configuration;
-        ConnectionString = Configuration.GetConnectionString("DefaultConnectionString");
     }
 
     public IConfiguration Configuration { get; }
 
     public void ConfigureServices(IServiceCollection services)
     {
+        var connectionString = "fake-db-connection";
         services.AddControllers();
-        services.AddDbContext<AddDbContext>(contextOptions => contextOptions.UseSqlServer(ConnectionString));
+        services.AddDbContext<AddDbContext>(contextOptions => contextOptions.UseSqlServer(connectionString));
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -24,14 +23,6 @@ public class Startup
         {
             app.UseDeveloperExceptionPage();
         }
-
-        app.UseRouting();
-
-        app.UseAuthorization();
-
-        app.UseHttpsRedirection();
-
-        app.UseStaticFiles();
     }
 }
 
