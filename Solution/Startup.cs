@@ -1,7 +1,10 @@
-﻿public class Startup
-{
+﻿using _3DModelMax.Host.Models;
+using Microsoft.EntityFrameworkCore;
+
+public class Startup
+{   
     public Startup(IConfiguration configuration)
-    {
+    {      
         Configuration = configuration;
     }
 
@@ -9,7 +12,9 @@
 
     public void ConfigureServices(IServiceCollection services)
     {
+        var connectionString = Configuration.GetConnectionString("DefaultConnectionString");
         services.AddControllers();
+        services.AddDbContext<AddDbContext>(contextOptions => contextOptions.UseSqlServer(connectionString));
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -18,14 +23,6 @@
         {
             app.UseDeveloperExceptionPage();
         }
-
-        app.UseRouting();
-
-        app.UseAuthorization();
-
-        app.UseHttpsRedirection();
-
-        app.UseStaticFiles();
     }
 }
 
