@@ -1,17 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+
 
 namespace _3DModelMax.Host.Controllers
 {
     public class HomeController : Controller
     {
-        [Obsolete]
-        private IHostingEnvironment _environment;
+        private readonly ILogger<HomeController> _logger;
 
-        [Obsolete]
-        public HomeController(IHostingEnvironment environment)
+        public HomeController(ILogger<HomeController> logger)
         {
-            _environment = environment;
+            _logger = logger;
         }
 
         public IActionResult Index()
