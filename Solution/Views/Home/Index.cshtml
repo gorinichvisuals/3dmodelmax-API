@@ -4,3 +4,11 @@
 
 <h1>Home</h1>
 
+<div>
+    <h4>Download File</h4>
+    <form asp-controller="Home" asp-action="UploadModel"
+        enctype="multipart/form-data" method="post">
+        <input type="file" name="file"/>
+        <button type="submit">Submit</button>
+    </form>
+</div>

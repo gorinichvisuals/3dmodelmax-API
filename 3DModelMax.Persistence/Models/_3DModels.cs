@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace _3DModelMax.Host.Models
 {
@@ -8,6 +8,7 @@ namespace _3DModelMax.Host.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime Timestamp { get; set; } 
-        public string Author { get; set; } 
+        public Authors Author { get; set; } 
+        public IFormFile file { get; set; }
     }
 }

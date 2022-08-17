@@ -1,19 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace _3DModelMax.Host.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        [Obsolete]
+        private IHostingEnvironment _environment;
 
-        public HomeController(ILogger<HomeController> logger)
+        [Obsolete]
+        public HomeController(IHostingEnvironment environment)
         {
-            _logger = logger;
+            _environment = environment;
         }
 
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult UploadModel(IFormFile file)
+        {
+            using (var fileStream = new FileStream(Path.Combine(file.Name), FileMode.Create, FileAccess.Write))
+            {
+                file.CopyTo(fileStream);
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }
