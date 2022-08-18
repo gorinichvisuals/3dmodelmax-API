@@ -2,13 +2,12 @@
 
 namespace _3DModelMax.Host.Models
 {
-    public class _3DModels
+    public class _3DModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime Timestamp { get; set; } 
-        public Authors Author { get; set; } 
-        public IFormFile file { get; set; }
+        public Author Author { get; set; } 
     }
 }

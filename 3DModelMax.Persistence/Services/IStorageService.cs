@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _3DModelMax.Persistence.Services
+namespace _3DModelMax.Persistence.ServicesDTO
 {
-    internal interface IStorageService
+    public interface IStorageService
     {
-        void UploadModel(IFormFile file);
+        void UploadModel(IFormFile _3DModelDTO);
     }
 }

@@ -12,4 +12,8 @@
     <ProjectReference Include="..\3DModelMax.Persistence\3DModelMax.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>

@@ -1,16 +1,17 @@
 ﻿using _3DModelMax.Host.Models;
+using _3DModelMax.Persistence.Models;
+using _3DModelMax.Persistence.ServicesDTO;
 using Microsoft.AspNetCore.Mvc;
-using Nest;
 
 namespace _3DModelMax.Host.Controllers
 {
     public class _3DModelsController : Controller
     {
-        private readonly IRepository<_3DModels> db;
+        IRepository<_3DModel> db;
 
-        public _3DModelsController()
+        public _3DModelsController(IRepository<_3DModel> _3DModel)
         {
-            db = new SQL3DModelsRepository();
+            db = _3DModel;
         }
 
         public ActionResult Index()
@@ -24,7 +25,7 @@ namespace _3DModelMax.Host.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(_3DModels _3dmodel)
+        public ActionResult Create(_3DModel _3dmodel)
         {
             if (ModelState.IsValid)
             {
@@ -37,12 +38,12 @@ namespace _3DModelMax.Host.Controllers
 
         public ActionResult Edit(int id)
         {
-            _3DModels _3dmodel = db.Get3DmodelsById(id);
+            _3DModel _3dmodel = db.Get3DmodelsById(id);
             return View(_3dmodel);
         }
 
         [HttpPost]
-        public ActionResult Edit(_3DModels _3dmodel)
+        public ActionResult Edit(_3DModel _3dmodel)
         {
             if (ModelState.IsValid)
             {
@@ -56,7 +57,7 @@ namespace _3DModelMax.Host.Controllers
         [HttpGet]
         public ActionResult Delete3DmodelsById(int id)
         {
-            _3DModels _3dmod = db.Get3DmodelsById(id);
+            _3DModel _3dmod = db.Get3DmodelsById(id);
             return View(_3dmod);
         }
 
@@ -65,12 +66,6 @@ namespace _3DModelMax.Host.Controllers
         {
             db.Delete3DmodelsById(id);
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            db.Dispose();
-            base.Dispose(disposing);
         }
     }
 }

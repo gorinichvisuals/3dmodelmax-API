@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _3DModelMax.Persistence.Services
+namespace _3DModelMax.Persistence.ServicesDTO
 {
-    internal interface IRepository<T> : IDisposable where T : class
+    public interface IRepository<T>
     {
         IEnumerable<T> Get3DmodelsList();
         T Get3DmodelsById(int id);

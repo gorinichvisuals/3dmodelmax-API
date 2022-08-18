@@ -10,7 +10,7 @@ namespace _3DModelMax.Host.Models
             
         }
 
-        public DbSet<_3DModels> Models { get; set; }
-        public DbSet<Authors> Author { get; set; }
+        public DbSet<_3DModel> Model { get; set; }
+        public DbSet<Author> Author { get; set; }
     }   
 }
