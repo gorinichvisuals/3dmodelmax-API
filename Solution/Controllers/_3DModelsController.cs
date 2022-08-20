@@ -7,9 +7,9 @@ namespace _3DModelMax.Host.Controllers
 {
     public class _3DModelsController : Controller
     {
-        IRepository<_3DModel> db;
+        IRepository<_3DModelDTO> db;
 
-        public _3DModelsController(IRepository<_3DModel> _3DModel)
+        public _3DModelsController(IRepository<_3DModelDTO> _3DModel)
         {
             db = _3DModel;
         }
@@ -25,7 +25,7 @@ namespace _3DModelMax.Host.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(_3DModel _3dmodel)
+        public ActionResult Create(_3DModelDTO _3dmodel)
         {
             if (ModelState.IsValid)
             {
@@ -38,12 +38,12 @@ namespace _3DModelMax.Host.Controllers
 
         public ActionResult Edit(int id)
         {
-            _3DModel _3dmodel = db.Get3DmodelsById(id);
+            _3DModelDTO _3dmodel = db.Get3DmodelsById(id);
             return View(_3dmodel);
         }
 
         [HttpPost]
-        public ActionResult Edit(_3DModel _3dmodel)
+        public ActionResult Edit(_3DModelDTO _3dmodel)
         {
             if (ModelState.IsValid)
             {
@@ -57,7 +57,7 @@ namespace _3DModelMax.Host.Controllers
         [HttpGet]
         public ActionResult Delete3DmodelsById(int id)
         {
-            _3DModel _3dmod = db.Get3DmodelsById(id);
+            _3DModelDTO _3dmod = db.Get3DmodelsById(id);
             return View(_3dmod);
         }
 
