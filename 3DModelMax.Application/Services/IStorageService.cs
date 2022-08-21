@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace _3DModelMax.Persistence.ServicesDTO
+namespace _3DModelMax.Application.Services
 {
     public interface IStorageService
     {

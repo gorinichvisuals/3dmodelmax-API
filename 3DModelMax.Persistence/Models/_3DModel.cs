@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace _3DModelMax.Host.Models
+﻿namespace _3DModelMax.Persistence.Models
 {
     public class _3DModel
     {

@@ -1,26 +1,29 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using _3DModelMax.Persistence.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace _3DModelMax.Host.Models
+namespace _3DModelMax.SQLPersistence
 {
     public class AddDbContext : DbContext
     {
-        public AddDbContext(DbContextOptions<AddDbContext> contextOptions) 
-            : base(contextOptions)
+        public DbSet<_3DModel> Models { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        
+        public AddDbContext()
         {
             
         }
-
-        public AddDbContext() : base()
+        
+        public AddDbContext(DbContextOptions<AddDbContext> contextOptions) : base(contextOptions)
         {
             
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=localhost\\SQLEXPRESS;Database=master;Trusted_Connection=True");
+            if(!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(@"Server=localhost\\SQLEXPRESS;Database=master;Trusted_Connection=True");
+            }
         }
-
-        public DbSet<_3DModel> Model { get; set; }
-        public DbSet<Author> Author { get; set; }
     }   
 }

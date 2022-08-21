@@ -1,6 +1,5 @@
-﻿using _3DModelMax.Host.Models;
-using _3DModelMax.Persistence.Models;
-using _3DModelMax.Persistence.ServicesDTO;
+﻿using _3DModelMax.Application.Models;
+using _3DModelMax.Persistence.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace _3DModelMax.Host.Controllers
@@ -55,13 +54,13 @@ namespace _3DModelMax.Host.Controllers
         }
 
         [HttpGet]
-        public ActionResult Delete3DmodelsById(int id)
+        public ActionResult Delete3DModelsById(int id)
         {
             _3DModelDTO _3dmod = db.Get3DmodelsById(id);
             return View(_3dmod);
         }
 
-        [HttpPost, ActionName("Delete3DmodelsById")]
+        [HttpPost, ActionName("Delete3DModelsById")]
         public ActionResult DeleteConfirmed(int id)
         {
             db.Delete3DmodelsById(id);

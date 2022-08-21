@@ -1,8 +1,8 @@
-﻿using _3DModelMax.Host.Models;
-using _3DModelMax.Persistence.ServicesDTO;
+﻿using _3DModelMax.Persistence.Models;
+using _3DModelMax.Persistence.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace _3DModelMax.Persistence.Models
+namespace _3DModelMax.SQLPersistence
 {
     public class SQL3DModelsRepository : IRepository<_3DModel>
     {
@@ -15,17 +15,17 @@ namespace _3DModelMax.Persistence.Models
 
         public IEnumerable<_3DModel> Get3DmodelsList()
         {
-            return db.Model;
+            return db.Models;
         }
 
         public _3DModel Get3DmodelsById(int id)
         {
-            return db.Model.Find(id);
+            return db.Models.Find(id);
         }
 
         public void Create(_3DModel _3dmodel)
         {
-            db.Model.Add(_3dmodel);
+            db.Models.Add(_3dmodel);
         }
 
         public void Update(_3DModel _3dmodel)
@@ -35,10 +35,10 @@ namespace _3DModelMax.Persistence.Models
 
         public void Delete3DmodelsById(int id)
         {
-            _3DModel _3dmodel = db.Model.Find(id);
+            _3DModel _3dmodel = db.Models.Find(id);
             if (_3dmodel != null)
             {
-                db.Model.Remove(_3dmodel);
+                db.Models.Remove(_3dmodel);
             }
         }
 

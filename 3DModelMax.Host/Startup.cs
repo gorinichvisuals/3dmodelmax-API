@@ -1,6 +1,6 @@
-﻿using _3DModelMax.Host.Models;
-using _3DModelMax.Persistence.Models;
-using _3DModelMax.Persistence.ServicesDTO;
+﻿using _3DModelMax.Persistence.Models;
+using _3DModelMax.Persistence.Services;
+using _3DModelMax.SQLPersistence;
 using Microsoft.EntityFrameworkCore;
 
 public class Startup
@@ -18,6 +18,7 @@ public class Startup
         services.AddControllers();
         services.AddMvc();
         services.AddDbContext<AddDbContext>(contextOptions => contextOptions.UseSqlServer(connectionString));
+        // services.AddDbContext<AddDbContext>();
         services.AddScoped<IRepository<_3DModel>, SQL3DModelsRepository>();
     }
 

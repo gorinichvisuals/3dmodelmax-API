@@ -1,4 +1,4 @@
-﻿namespace _3DModelMax.Host.Models
+﻿namespace _3DModelMax.Persistence.Models
 {
     public class Author
     {
