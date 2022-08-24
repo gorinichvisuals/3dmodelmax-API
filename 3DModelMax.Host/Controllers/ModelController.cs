@@ -8,11 +8,11 @@ namespace _3DModelMax.Host.Controllers
 {
     [Route("api/models")]
     [ApiController]
-    public class CreateModelController : ControllerBase
+    public class ModelController : ControllerBase
     {
         private IModelService _modelService;
 
-        public CreateModelController(IModelService modelService)
+        public ModelController(IModelService modelService)
         {
             _modelService = modelService;
         }
@@ -20,6 +20,11 @@ namespace _3DModelMax.Host.Controllers
         [HttpPost]
         public IActionResult CreateModel([FromForm] _3DModelDTO objModel)
         {
+            if (!ModelState.IsValid || objModel.File.Length == 0)
+            {
+                return BadRequest();
+            }
+
             _modelService.CreateModel(objModel);
             return Ok();
         }
