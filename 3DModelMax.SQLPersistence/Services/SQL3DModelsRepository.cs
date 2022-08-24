@@ -2,7 +2,7 @@
 using _3DModelMax.Persistence.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace _3DModelMax.SQLPersistence
+namespace _3DModelMax.SQLPersistence.Services
 {
     public class SQL3DModelsRepository : IRepository<_3DModel>
     {

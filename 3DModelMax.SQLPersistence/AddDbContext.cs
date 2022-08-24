@@ -22,7 +22,7 @@ namespace _3DModelMax.SQLPersistence
         {
             if(!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Server=localhost\\SQLEXPRESS;Database=master;Trusted_Connection=True");
+                optionsBuilder.UseSqlServer(@"Server=localhost\\SQLEXPRESS;Database=3dmodels;Trusted_Connection=True");
             }
         }
     }   

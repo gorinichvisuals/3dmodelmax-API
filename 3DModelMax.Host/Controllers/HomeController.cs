@@ -1,9 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using _3DModelMax.SQLPersistence;
+using Microsoft.AspNetCore.Mvc;
 
 namespace _3DModelMax.Host.Controllers
 {
+    [Route("Home")]
     public class HomeController : Controller
     {
+        private AddDbContext context;
+
+        public HomeController(AddDbContext addDbContext)
+        {
+            context = addDbContext;
+        }
+
         public IActionResult Index()
         {
             return View();

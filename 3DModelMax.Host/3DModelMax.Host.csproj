@@ -14,6 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.9" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\3DModelMax.Application\3DModelMax.Application.csproj" />
     <ProjectReference Include="..\3DModelMax.Persistence\3DModelMax.Persistence.csproj" />
     <ProjectReference Include="..\3DModelMax.SQLPersistence\3DModelMax.SQLPersistence.csproj" />

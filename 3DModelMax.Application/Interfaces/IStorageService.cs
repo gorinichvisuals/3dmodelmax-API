@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace _3DModelMax.Application.Services
+namespace _3DModelMax.Application.Interfaces
 {
     public interface IStorageService
     {
