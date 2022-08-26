@@ -14,7 +14,7 @@ namespace _3DModelMax.Application.Services
             _repository = repository;
         }
 
-        public void CreateModel(_3DModelDTO objModel)
+        public async Task CreateModel(_3DModelDTO objModel)
         {
             var model = new _3DModel();
 
@@ -23,15 +23,15 @@ namespace _3DModelMax.Application.Services
             model.UploadDate = DateTime.Now;
             model.Author = new Author { FirstName = "Boris", LastName = "Johnson", Age = 35, RegistrationDate = DateTime.Now };
            
-            using (var file = new MemoryStream())
+            await using (var file = new MemoryStream())
             {
                 objModel.File.CopyTo(file);
                 var fileBytes = file.ToArray();
                 model.File = fileBytes;
             }
             
-            _repository.Create(model);
-            _repository.Save();
+            await _repository.CreateAsync(model);
+            await _repository.SaveAsync();
         }
     }
 }
