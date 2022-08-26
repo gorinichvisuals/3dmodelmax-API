@@ -5,6 +5,6 @@ namespace _3DModelMax.Application.Interfaces
 {
     public interface IModelService
     {
-        void CreateModel(_3DModelDTO objModel);
+        Task CreateModel(_3DModelDTO objModel);
     }
 }

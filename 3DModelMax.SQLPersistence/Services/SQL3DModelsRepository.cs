@@ -13,27 +13,27 @@ namespace _3DModelMax.SQLPersistence.Services
             db = addDb;
         }
 
-        public IEnumerable<_3DModel> Get3DmodelsList()
+        public async Task<IEnumerable<_3DModel>> Get3DmodelsList()
         {
             return db.Models;
         }
 
-        public _3DModel Get3DmodelsById(int id)
+        public async Task<_3DModel> Get3DmodelsById(int id)
         {
             return db.Models.Find(id);
         }
 
-        public void Create(_3DModel _3dmodel)
+        public async Task Create(_3DModel _3dmodel)
         {
             db.Models.Add(_3dmodel);
         }
 
-        public void Update(_3DModel _3dmodel)
+        public async Task Update(_3DModel _3dmodel)
         {
             db.Entry(_3dmodel).State = EntityState.Modified;
         }
 
-        public void Delete3DmodelsById(int id)
+        public async Task Delete3DmodelsById(int id)
         {
             _3DModel _3dmodel = db.Models.Find(id);
             if (_3dmodel != null)
@@ -42,7 +42,7 @@ namespace _3DModelMax.SQLPersistence.Services
             }
         }
 
-        public void Save()
+        public async Task Save()
         {
             db.SaveChanges();
         }

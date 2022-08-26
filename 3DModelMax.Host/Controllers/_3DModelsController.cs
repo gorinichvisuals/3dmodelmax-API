@@ -13,57 +13,57 @@ namespace _3DModelMax.Host.Controllers
             db = _3DModel;
         }
 
-        public ActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return View(db.Get3DmodelsList());
+            return View(await db.Get3DmodelsList());
         }
 
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Create(_3DModelDTO _3dmodel)
+        public async Task<IActionResult> CreateAsync(_3DModelDTO _3dmodel)
         {
             if (ModelState.IsValid)
             {
-                db.Create(_3dmodel);
-                db.Save();
+                await db.Create(_3dmodel);
+                await db.Save();
                 return RedirectToAction("Index");
             }
             return View(_3dmodel);
         }
 
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> EditAsync(int id)
         {
-            _3DModelDTO _3dmodel = db.Get3DmodelsById(id);
+            _3DModelDTO _3dmodel = await db.Get3DmodelsById(id);
             return View(_3dmodel);
         }
 
         [HttpPost]
-        public ActionResult Edit(_3DModelDTO _3dmodel)
+        public async Task<IActionResult> EditAsync(_3DModelDTO _3dmodel)
         {
             if (ModelState.IsValid)
             {
-                db.Update(_3dmodel);
-                db.Save();
+                await db.Update(_3dmodel);
+                await db.Save();
                 return RedirectToAction("Index");
             }
             return View(_3dmodel);
         }
 
         [HttpGet]
-        public ActionResult Delete3DModelsById(int id)
+        public async Task<IActionResult> Delete3DModelsByIdAsync(int id)
         {
-            _3DModelDTO _3dmod = db.Get3DmodelsById(id);
+            _3DModelDTO _3dmod = await db.Get3DmodelsById(id);
             return View(_3dmod);
         }
 
         [HttpPost, ActionName("Delete3DModelsById")]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmedAsync(int id)
         {
-            db.Delete3DmodelsById(id);
+            await db.Delete3DmodelsById(id);
             return RedirectToAction("Index");
         }
     }

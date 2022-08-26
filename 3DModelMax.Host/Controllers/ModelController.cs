@@ -18,14 +18,14 @@ namespace _3DModelMax.Host.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateModel([FromForm] _3DModelDTO objModel)
+        public async Task<IActionResult> CreateModel([FromForm] _3DModelDTO objModel)
         {
             if (!ModelState.IsValid || objModel.File.Length == 0)
             {
                 return BadRequest();
             }
 
-            _modelService.CreateModel(objModel);
+            await _modelService.CreateModel(objModel);
             return Ok();
         }
     }

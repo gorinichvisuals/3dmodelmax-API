@@ -23,7 +23,7 @@ public class Startup
         services.AddDbContext<AddDbContext>(contextOptions => contextOptions.UseSqlServer(connectionString));
         //services.AddDbContext<AddDbContext>();
         services.AddScoped<IRepository<_3DModel>, SQL3DModelsRepository>();
-        services.AddScoped<IModelService, Create3DModelServices>();
+        services.AddScoped<IModelService, ModelService>();
         services.AddControllersWithViews();
 
     }
