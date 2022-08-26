@@ -29,10 +29,9 @@ namespace _3DModelMax.SQLPersistence.Services
             await db.Models.AddAsync(_3dmodel);
         }
 
-        public async Task UpdateAsync(_3DModel _3dmodel)
+        public void Update(_3DModel _3dmodel)
         {
-            db.Entry(_3dmodel).State = EntityState.Modified;
-            await db.SaveChangesAsync();
+            db.Models.Update(_3dmodel);
         }
 
         public async Task Delete3DmodelByIdAsync(int id)

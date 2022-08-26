@@ -6,7 +6,7 @@
         Task<T> Get3DmodelByIdAsync(int id);
         Task Delete3DmodelByIdAsync(int id);
         Task CreateAsync(T item);
-        Task UpdateAsync(T item);
+        void Update(T item);
         Task SaveAsync();
     }
 }

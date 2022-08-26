@@ -41,7 +41,7 @@ namespace _3DModelMax.Host.Controllers
         {
             if (ModelState.IsValid)
             {
-                await db.UpdateAsync(_3dmodel);
+                db.Update(_3dmodel);
                 await db.SaveAsync();
                 return RedirectToAction("Index");
             }
