@@ -2,11 +2,11 @@
 {
     public interface IRepository<T>
     {
-        IEnumerable<T> Get3DmodelsList();
-        T Get3DmodelsById(int id);
-        void Delete3DmodelsById(int id);
-        void Create(T item);
-        void Update(T item);
-        void Save();
+        Task<ICollection<T>> Get3DmodelsListAsync();
+        Task<T> Get3DmodelByIdAsync(int id);
+        Task Delete3DmodelByIdAsync(int id);
+        Task CreateAsync(T item);
+        Task UpdateAsync(T item);
+        Task SaveAsync();
     }
 }

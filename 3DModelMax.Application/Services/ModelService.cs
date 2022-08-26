@@ -30,8 +30,8 @@ namespace _3DModelMax.Application.Services
                 model.File = fileBytes;
             }
             
-            await _repository.Create(model);
-            await _repository.Save();
+            await _repository.CreateAsync(model);
+            await _repository.SaveAsync();
         }
     }
 }

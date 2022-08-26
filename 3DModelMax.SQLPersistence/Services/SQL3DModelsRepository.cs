@@ -1,6 +1,7 @@
 ﻿using _3DModelMax.Persistence.Models;
 using _3DModelMax.Persistence.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace _3DModelMax.SQLPersistence.Services
 {
@@ -13,38 +14,40 @@ namespace _3DModelMax.SQLPersistence.Services
             db = addDb;
         }
 
-        public async Task<IEnumerable<_3DModel>> Get3DmodelsList()
+        public async Task<ICollection<_3DModel>> Get3DmodelsListAsync()
         {
-            return db.Models;
+            return await db.Models.AsNoTracking().ToListAsync();
         }
 
-        public async Task<_3DModel> Get3DmodelsById(int id)
+        public async Task<_3DModel> Get3DmodelByIdAsync(int id)
         {
-            return db.Models.Find(id);
+            return await db.Models.AsNoTracking().Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task Create(_3DModel _3dmodel)
+        public async Task CreateAsync(_3DModel _3dmodel)
         {
-            db.Models.Add(_3dmodel);
+            await db.Models.AddAsync(_3dmodel);
         }
 
-        public async Task Update(_3DModel _3dmodel)
+        public async Task UpdateAsync(_3DModel _3dmodel)
         {
             db.Entry(_3dmodel).State = EntityState.Modified;
+            await db.SaveChangesAsync();
         }
 
-        public async Task Delete3DmodelsById(int id)
+        public async Task Delete3DmodelByIdAsync(int id)
         {
-            _3DModel _3dmodel = db.Models.Find(id);
+            _3DModel _3dmodel = await db.Models.FindAsync(id);
+
             if (_3dmodel != null)
             {
                 db.Models.Remove(_3dmodel);
             }
         }
 
-        public async Task Save()
+        public async Task SaveAsync()
         {
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
     }
 }

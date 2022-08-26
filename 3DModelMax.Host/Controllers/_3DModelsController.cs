@@ -18,11 +18,6 @@ namespace _3DModelMax.Host.Controllers
             return View(await db.Get3DmodelsListAsync());
         }
 
-        public IActionResult Create()
-        {
-            return View();
-        }
-
         [HttpPost]
         public async Task<IActionResult> CreateAsync(_3DModelDTO _3dmodel)
         {
@@ -37,7 +32,7 @@ namespace _3DModelMax.Host.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            _3DModelDTO _3dmodel = await db.Get3DmodelsByIdAsync(id);
+            _3DModelDTO _3dmodel = await db.Get3DmodelByIdAsync(id);
             return View(_3dmodel);
         }
 
@@ -54,16 +49,16 @@ namespace _3DModelMax.Host.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete3DModelsByIdAsync(int id)
+        public async Task<IActionResult> Delete3DModelByIdAsync(int id)
         {
-            _3DModelDTO _3dmod = await db.Get3DmodelsByIdAsync(id);
+            _3DModelDTO _3dmod = await db.Get3DmodelByIdAsync(id);
             return View(_3dmod);
         }
 
         [HttpPost, ActionName("Delete3DModelsById")]
         public async Task<IActionResult> DeleteConfirmedAsync(int id)
         {
-            await db.Delete3DmodelsByIdAsync(id);
+            await db.Delete3DmodelByIdAsync(id);
             return RedirectToAction("Index");
         }
     }
