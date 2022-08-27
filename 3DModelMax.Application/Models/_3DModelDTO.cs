@@ -6,10 +6,15 @@ namespace _3DModelMax.Application.Models
 {
     public class _3DModelDTO 
     {
+        [Key]
+        public int Id { get; set; }
+
         [Required]
         public string Name { get; set; }
+
         [Required]
         public string Description { get; set; }
+
         [Required]
         public IFormFile File { get; set; }
     }
