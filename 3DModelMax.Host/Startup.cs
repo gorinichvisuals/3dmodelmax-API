@@ -1,5 +1,6 @@
 ﻿using _3DModelMax.Application.Interfaces;
 using _3DModelMax.Application.Services;
+using _3DModelMax.Persistence.Interfaces;
 using _3DModelMax.Persistence.Models;
 using _3DModelMax.Persistence.Services;
 using _3DModelMax.SQLPersistence;
@@ -22,8 +23,11 @@ public class Startup
         services.AddMvc();
         services.AddDbContext<AddDbContext>(contextOptions => contextOptions.UseSqlServer(connectionString));
         //services.AddDbContext<AddDbContext>();
-        services.AddScoped<IRepository<_3DModel>, SQL3DModelsRepository>();
+        services.AddScoped<I3DModelRepository<_3DModel>, SQL3DModelsRepository>();
+        services.AddScoped<IAuthorRepository<Author>, SQLAuthorsRepository>();
         services.AddScoped<IModelService, ModelService>();
+        services.AddScoped<IAuthorService, AuthorService>();
+
         services.AddControllersWithViews();
 
     }

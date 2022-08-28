@@ -6,9 +6,9 @@ namespace _3DModelMax.Host.Controllers
 {
     public class _3DModelsController : Controller
     {
-        IRepository<_3DModelDTO> db;
+        I3DModelRepository<_3DModelDTO> db;
 
-        public _3DModelsController(IRepository<_3DModelDTO> _3DModel)
+        public _3DModelsController(I3DModelRepository<_3DModelDTO> _3DModel)
         {
             db = _3DModel;
         }

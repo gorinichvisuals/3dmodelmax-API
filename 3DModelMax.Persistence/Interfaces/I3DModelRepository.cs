@@ -1,6 +1,6 @@
 ﻿namespace _3DModelMax.Persistence.Services
 {
-    public interface IRepository<T>
+    public interface I3DModelRepository<T>
     {
         Task<ICollection<T>> Get3DModelsListAsync();
         Task<T> Get3DModelByIdAsync(int id);

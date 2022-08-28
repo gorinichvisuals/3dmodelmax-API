@@ -8,9 +8,9 @@ namespace _3DModelMax.Application.Services
 {
     public class ModelService : IModelService
     {
-        private readonly IRepository<_3DModel> _repository;
+        private readonly I3DModelRepository<_3DModel> _repository;
 
-        public ModelService(IRepository<_3DModel> repository)
+        public ModelService(I3DModelRepository<_3DModel> repository)
         {
             _repository = repository;
         }
