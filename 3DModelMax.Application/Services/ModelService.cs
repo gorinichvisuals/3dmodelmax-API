@@ -23,20 +23,11 @@ namespace _3DModelMax.Application.Services
             model.Description = objModel.Description;
             model.UploadDate = DateTime.Now;
             model.Author = new Author { FirstName = "Boris", LastName = "Johnson", Age = 35, RegistrationDate = DateTime.Now };
-            model.File = await UploadDTOFile(objModel.File);
+            model.File = await GetFileBytes(objModel.File);
 
             await _repository.CreateAsync(model);
             await _repository.SaveAsync();
         }  
-
-        public async Task<byte[]> UploadDTOFile(IFormFile fileDTO)
-        {
-            await using (var file = new MemoryStream())
-            {
-                fileDTO.CopyTo(file);
-                return file.ToArray();
-            }
-        }
 
         public async Task UpdateModel(_3DModelUpdateDTO objModel)
         {
@@ -44,7 +35,7 @@ namespace _3DModelMax.Application.Services
             updModel.Name = objModel.Name;
             updModel.Description = objModel.Description;
             updModel.LastUpdated = DateTime.Now;
-            updModel.File = await UploadDTOFile(objModel.File);
+            updModel.File = await GetFileBytes(objModel.File);
 
             _repository.Update(updModel);
             await _repository.SaveAsync();
@@ -54,6 +45,15 @@ namespace _3DModelMax.Application.Services
         {
             await _repository.Delete3DModelByIdAsync(id);
             await _repository.SaveAsync();
+        }
+
+        private async Task<byte[]> GetFileBytes(IFormFile file)
+        {
+            await using (var newFile = new MemoryStream())
+            {
+                file.CopyTo(newFile);
+                return newFile.ToArray();
+            }
         }
     }
 }

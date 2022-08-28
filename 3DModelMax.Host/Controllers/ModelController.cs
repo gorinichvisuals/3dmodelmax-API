@@ -42,8 +42,8 @@ namespace _3DModelMax.Host.Controllers
             return Ok();
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteModelById([FromForm] int id)
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteModelById(int id)
         {
             if (!ModelState.IsValid )
             {
