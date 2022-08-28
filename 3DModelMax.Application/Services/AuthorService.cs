@@ -21,19 +21,20 @@ namespace _3DModelMax.Application.Services
 
         public async Task CreateAuthor(AuthorCreateDTO author)
         {
-            var createAuthor = new Author();
+            var createAuthor = new Author
+            {
+                FirstName = author.FirstName,
+                LastName = author.LastName,
+                NickName = author.NickName,
+                Age = author.Age,
+                Description = author.Description,
+                RegistrationDate = DateTime.Now,
+                Email = author.Email,
+                Password = author.Password
+            };
 
-            createAuthor.FirstName = author.FirstName;
-            createAuthor.LastName = author.LastName;
-            createAuthor.NickName = author.NickName;
-            createAuthor.Age = author.Age;
-            createAuthor.Description = author.Description;
-            createAuthor.RegistrationDate = DateTime.Now;
-            createAuthor.Email = author.Email;
-            createAuthor.Password = author.Password;
-
-            await _repository.CreateAuth(createAuthor);
-            await _repository.SaveAuth();
+            await _repository.CreateAuthor(createAuthor);
+            await _repository.SaveAuthor();
         }
     }
 }

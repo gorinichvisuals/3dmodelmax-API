@@ -23,12 +23,12 @@ namespace _3DModelMax.SQLPersistence.Services
             return await db.Authors.AsNoTracking().ToListAsync();
         }
 
-        public async Task<Author> GetAuthById(int id)
+        public async Task<Author> GetAuthorById(int id)
         {
             return await db.Authors.AsNoTracking().Where(a => a.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task DeleteAuthById(int id)
+        public async Task DeleteAuthorById(int id)
         {
             Author author = await db.Authors.FindAsync(id);
 
@@ -38,17 +38,17 @@ namespace _3DModelMax.SQLPersistence.Services
             }
         }
 
-        public async Task CreateAuth(Author author)
+        public async Task CreateAuthor(Author author)
         {
             await db.Authors.AddAsync(author);
         }
 
-        public void UpdateAuth(Author author)
+        public void UpdateAuthor(Author author)
         {
             db.Authors.Update(author);
         }
 
-        public async Task SaveAuth()
+        public async Task SaveAuthor()
         {
             await db.SaveChangesAsync();
         }

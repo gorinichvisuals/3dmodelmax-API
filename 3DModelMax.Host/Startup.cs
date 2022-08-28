@@ -27,7 +27,6 @@ public class Startup
         services.AddScoped<IAuthorRepository<Author>, SQLAuthorsRepository>();
         services.AddScoped<IModelService, ModelService>();
         services.AddScoped<IAuthorService, AuthorService>();
-
         services.AddControllersWithViews();
 
     }

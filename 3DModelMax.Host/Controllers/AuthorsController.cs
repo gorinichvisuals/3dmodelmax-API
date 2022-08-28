@@ -7,17 +7,17 @@ namespace _3DModelMax.Host.Controllers
 {
     [Route("api/authors")]
     [ApiController]
-    public class AuthorController : ControllerBase
+    public class AuthorsController : ControllerBase
     {
         private IAuthorService authorService;
 
-        public AuthorController(IAuthorService authorService)
+        public AuthorsController(IAuthorService authorService)
         {
             this.authorService = authorService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAuthor([FromForm] AuthorCreateDTO author)
+        public async Task<IActionResult> CreateAuthor([FromBody] AuthorCreateDTO author)
         {
             if (!ModelState.IsValid) 
             { 
