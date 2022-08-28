@@ -4,8 +4,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace _3DModelMax.Application.Models
 {
-    public class _3DModelDTO 
+    public class _3DModelUpdateDTO
     {
+        [Key]
+        public int Id { get; set; }
+
         [Required]
         public string Name { get; set; }
 

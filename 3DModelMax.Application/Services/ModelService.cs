@@ -2,6 +2,7 @@
 using _3DModelMax.Application.Models;
 using _3DModelMax.Persistence.Models;
 using _3DModelMax.Persistence.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace _3DModelMax.Application.Services
 {
@@ -22,16 +23,37 @@ namespace _3DModelMax.Application.Services
             model.Description = objModel.Description;
             model.UploadDate = DateTime.Now;
             model.Author = new Author { FirstName = "Boris", LastName = "Johnson", Age = 35, RegistrationDate = DateTime.Now };
-           
-            await using (var file = new MemoryStream())
-            {
-                objModel.File.CopyTo(file);
-                var fileBytes = file.ToArray();
-                model.File = fileBytes;
-            }
-            
+            model.File = await GetFileBytes(objModel.File);
+
             await _repository.CreateAsync(model);
             await _repository.SaveAsync();
+        }  
+
+        public async Task UpdateModel(_3DModelUpdateDTO objModel)
+        {
+            var updModel = await _repository.Get3DModelByIdAsync(objModel.Id);
+            updModel.Name = objModel.Name;
+            updModel.Description = objModel.Description;
+            updModel.LastUpdated = DateTime.Now;
+            updModel.File = await GetFileBytes(objModel.File);
+
+            _repository.Update(updModel);
+            await _repository.SaveAsync();
+        }
+
+        public async Task DeleteModelById(int id)
+        {
+            await _repository.Delete3DModelByIdAsync(id);
+            await _repository.SaveAsync();
+        }
+
+        private async Task<byte[]> GetFileBytes(IFormFile file)
+        {
+            await using (var newFile = new MemoryStream())
+            {
+                file.CopyTo(newFile);
+                return newFile.ToArray();
+            }
         }
     }
 }
