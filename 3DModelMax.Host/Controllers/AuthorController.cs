@@ -17,7 +17,7 @@ namespace _3DModelMax.Host.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAuthor([FromForm] AuthorRegistration author)
+        public async Task<IActionResult> CreateAuthor([FromForm] AuthorCreateDTO author)
         {
             if (!ModelState.IsValid) 
             { 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace _3DModelMax.Application.Models
 {
-    public class AuthorRegistration
+    public class AuthorCreateDTO
     {
         [Required]
         public string FirstName { get; set; }

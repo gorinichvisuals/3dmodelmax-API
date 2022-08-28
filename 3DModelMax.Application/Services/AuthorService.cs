@@ -19,7 +19,7 @@ namespace _3DModelMax.Application.Services
             _repository = repository;
         }
 
-        public async Task CreateAuthor(AuthorRegistration author)
+        public async Task CreateAuthor(AuthorCreateDTO author)
         {
             var createAuthor = new Author();
 

@@ -9,6 +9,6 @@ namespace _3DModelMax.Application.Interfaces
 {
     public interface IAuthorService
     {
-        Task CreateAuthor(AuthorRegistration author);
+        Task CreateAuthor(AuthorCreateDTO author);
     }
 }
