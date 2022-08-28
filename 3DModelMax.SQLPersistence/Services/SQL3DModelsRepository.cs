@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace _3DModelMax.SQLPersistence.Services
 {
-    public class SQL3DModelsRepository : IRepository<_3DModel>
+    public class SQL3DModelsRepository : I3DModelRepository<_3DModel>
     {
         private AddDbContext db;
 
