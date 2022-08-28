@@ -31,7 +31,7 @@ namespace _3DModelMax.Host.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateModel([FromForm] _3DModelDTO objModel)
+        public async Task<IActionResult> UpdateModel([FromForm] _3DModelUpdateDTO objModel)
         {
             if (!ModelState.IsValid || objModel.File.Length == 0)
             {
