@@ -37,14 +37,9 @@ namespace _3DModelMax.Application.Services
             await _repository.SaveAuthor();
         }
 
-        public async Task<IEnumerable<Author>> GetAllAuthors()
+        public async Task<IEnumerable<Author>> GetAuthorsList()
         {
             return await _repository.GetAuthorsList();
-        }
-
-        public async Task<Author> GetAuthorById(int id)
-        {
-            return await _repository.GetAuthorById(id);
         }
     }
 }

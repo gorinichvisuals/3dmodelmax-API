@@ -19,16 +19,17 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         var connectionString = Configuration.GetConnectionString("DefaultConnectionString");
+
         services.AddControllers();
         services.AddMvc();
         services.AddDbContext<AddDbContext>(contextOptions => contextOptions.UseSqlServer(connectionString));
-        //services.AddDbContext<AddDbContext>();
+
         services.AddScoped<I3DModelRepository<_3DModel>, SQL3DModelsRepository>();
-        services.AddScoped<IAuthorRepository<Author>, SQLAuthorsRepository>();
         services.AddScoped<IModelService, ModelService>();
+
+        services.AddScoped<IAuthorRepository<Author>, SQLAuthorsRepository>();
         services.AddScoped<IAuthorService, AuthorService>();
         services.AddControllersWithViews();
-
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -48,6 +49,7 @@ public class Startup
         app.UseRouting();
 
         app.UseAuthorization();
+        app.UseAuthentication();
         app.UseEndpoints(endpoints => endpoints.MapControllers());
 
         using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();

@@ -2,6 +2,7 @@
 using _3DModelMax.Application.Models;
 using _3DModelMax.Persistence.Interfaces;
 using _3DModelMax.Persistence.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,14 +25,9 @@ namespace _3DModelMax.Host.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateModel([FromForm] _3DModelDTO objModel)
         {
-            if (!ModelState.IsValid || objModel.File.Length == 0)
-            {
-                return BadRequest();
-            }
-
-            if (objModel.AuthorId <= 0 
-                || !_authorService.GetAllAuthors().Result.Any(a => a.Id > objModel.AuthorId) 
-                || _authorService.GetAuthorById(objModel.AuthorId).Result is null) 
+            if (!ModelState.IsValid 
+                || objModel.File.Length == 0 
+                || !_authorService.GetAuthorsList().Result.Any(a => a.Id == objModel.AuthorId))
             {
                 return BadRequest();
             }
@@ -43,14 +39,9 @@ namespace _3DModelMax.Host.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateModel([FromForm] _3DModelUpdateDTO objModel)
         {
-            if (!ModelState.IsValid || objModel.File.Length == 0)
-            {
-                return BadRequest();
-            }
-
-            if (objModel.AuthorId <= 0
-                || !_authorService.GetAllAuthors().Result.Any(a => a.Id > objModel.AuthorId)
-                || _authorService.GetAuthorById(objModel.AuthorId).Result is null) 
+            if (!ModelState.IsValid
+                || objModel.File.Length == 0
+                || !_authorService.GetAuthorsList().Result.Any(a => a.Id == objModel.AuthorId))
             {
                 return BadRequest();
             }
