@@ -1,4 +1,5 @@
 ﻿using _3DModelMax.Application.Models;
+using _3DModelMax.Persistence.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace _3DModelMax.Application.Interfaces
     public interface IAuthorService
     {
         Task CreateAuthor(AuthorCreateDTO author);
+        Task<IEnumerable<Author>> GetAllAuthors();
+        Task<Author> GetAuthorById(int id);
     }
 }

@@ -13,12 +13,12 @@ namespace _3DModelMax.Host.Controllers
     public class ModelController : ControllerBase
     {
         private IModelService _modelService;
-        private IAuthorRepository<Author> _authorRepository;
+        private IAuthorService _authorService;
 
-        public ModelController(IModelService modelService, IAuthorRepository<Author> authorRepository)
+        public ModelController(IModelService modelService, IAuthorService authorService)
         {
             _modelService = modelService;
-            _authorRepository = authorRepository;
+            _authorService = authorService;
         }
 
         [HttpPost]
@@ -30,8 +30,8 @@ namespace _3DModelMax.Host.Controllers
             }
 
             if (objModel.AuthorId <= 0 
-                || !_authorRepository.GetAuthorsList().Result.Any(a => a.Id > objModel.AuthorId) 
-                || _authorRepository.GetAuthorById(objModel.AuthorId).Result is null) 
+                || !_authorService.GetAllAuthors().Result.Any(a => a.Id > objModel.AuthorId) 
+                || _authorService.GetAuthorById(objModel.AuthorId).Result is null) 
             {
                 return BadRequest();
             }
@@ -48,9 +48,9 @@ namespace _3DModelMax.Host.Controllers
                 return BadRequest();
             }
 
-            if (objModel.AuthorId <= 0 
-                ||  !_authorRepository.GetAuthorsList().Result.Any(a => a.Id > objModel.AuthorId) 
-                || _authorRepository.GetAuthorById(objModel.AuthorId).Result is null)
+            if (objModel.AuthorId <= 0
+                || !_authorService.GetAllAuthors().Result.Any(a => a.Id > objModel.AuthorId)
+                || _authorService.GetAuthorById(objModel.AuthorId).Result is null)
             {
                 return BadRequest();
             }
@@ -62,7 +62,7 @@ namespace _3DModelMax.Host.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteModelById(int id)
         {
-            if (!ModelState.IsValid )
+            if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
