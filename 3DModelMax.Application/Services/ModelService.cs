@@ -34,6 +34,7 @@ namespace _3DModelMax.Application.Services
             var updModel = await _repository.Get3DModelByIdAsync(objModel.Id);
             updModel.Name = objModel.Name;
             updModel.Description = objModel.Description;
+            updModel.AuthorId = objModel.AuthorId;
             updModel.LastUpdated = DateTime.Now;
             updModel.File = await GetFileBytes(objModel.File);
 
