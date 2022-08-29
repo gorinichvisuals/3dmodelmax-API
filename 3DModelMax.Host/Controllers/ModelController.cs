@@ -50,7 +50,7 @@ namespace _3DModelMax.Host.Controllers
 
             if (objModel.AuthorId <= 0
                 || !_authorService.GetAllAuthors().Result.Any(a => a.Id > objModel.AuthorId)
-                || _authorService.GetAuthorById(objModel.AuthorId).Result is null)
+                || _authorService.GetAuthorById(objModel.AuthorId).Result is null) 
             {
                 return BadRequest();
             }
