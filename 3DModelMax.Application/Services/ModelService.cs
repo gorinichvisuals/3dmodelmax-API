@@ -1,5 +1,6 @@
 ﻿using _3DModelMax.Application.Interfaces;
 using _3DModelMax.Application.Models;
+using _3DModelMax.Persistence.Interfaces;
 using _3DModelMax.Persistence.Models;
 using _3DModelMax.Persistence.Services;
 using Microsoft.AspNetCore.Http;
@@ -22,9 +23,8 @@ namespace _3DModelMax.Application.Services
             model.Name = objModel.Name;
             model.Description = objModel.Description;
             model.UploadDate = DateTime.Now;
-            model.Author = new Author { FirstName = "Boris", LastName = "Johnson", Age = 35, RegistrationDate = DateTime.Now };
             model.File = await GetFileBytes(objModel.File);
-
+            model.AuthorId = objModel.AuthorId;
             await _repository.CreateAsync(model);
             await _repository.SaveAsync();
         }  
