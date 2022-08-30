@@ -8,7 +8,7 @@ namespace _3DModelMax.SQLPersistence.Services
     public class SQL3DModelsRepository : I3DModelRepository<_3DModel>
     {
         private AddDbContext db;
-
+        
         public SQL3DModelsRepository(AddDbContext addDb)
         {
             db = addDb;

@@ -25,7 +25,8 @@ namespace _3DModelMax.SQLPersistence.Services
 
         public async Task<Author> GetAuthorById(int id)
         {
-            return await db.Authors.AsNoTracking().Where(a => a.Id == id).FirstOrDefaultAsync();
+            var author = await db.Authors.AsNoTracking().Where(a => a.Id == id).FirstOrDefaultAsync();
+            return author;
         }
 
         public async Task DeleteAuthorById(int id)
