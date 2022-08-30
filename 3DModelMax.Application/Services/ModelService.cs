@@ -9,11 +9,11 @@ namespace _3DModelMax.Application.Services
 {
     public class ModelService : IModelService
     {
-        private readonly I3DModelRepository<_3DModel> _repository;
+        private readonly I3DModelRepository<_3DModel> _modelRepository;
 
-        public ModelService(I3DModelRepository<_3DModel> repository)
+        public ModelService(I3DModelRepository<_3DModel> modelRepository)
         {
-            _repository = repository;
+            _modelRepository = modelRepository;
         }
 
         public async Task CreateModel(_3DModelDTO objModel)
@@ -25,27 +25,35 @@ namespace _3DModelMax.Application.Services
             model.UploadDate = DateTime.Now;
             model.File = await GetFileBytes(objModel.File);
             model.AuthorId = objModel.AuthorId;
-            await _repository.CreateAsync(model);
-            await _repository.SaveAsync();
-        }  
+            await _modelRepository.CreateAsync(model);
+            await _modelRepository.SaveAsync();
+        }
 
-        public async Task UpdateModel(_3DModelUpdateDTO objModel)
+        public async Task<bool> UpdateModel(_3DModelUpdateDTO objModel)
         {
-            var updModel = await _repository.Get3DModelByIdAsync(objModel.Id);
-            updModel.Name = objModel.Name;
-            updModel.Description = objModel.Description;
-            updModel.AuthorId = objModel.AuthorId;
-            updModel.LastUpdated = DateTime.Now;
-            updModel.File = await GetFileBytes(objModel.File);
+            var updModel = await _modelRepository.Get3DModelByIdAsync(objModel.Id);
 
-            _repository.Update(updModel);
-            await _repository.SaveAsync();
+            if (updModel.AuthorId == objModel.AuthorId)
+            {
+                updModel.Name = objModel.Name;
+                updModel.Description = objModel.Description;
+                updModel.LastUpdated = DateTime.Now;
+                updModel.File = await GetFileBytes(objModel.File);
+
+                _modelRepository.Update(updModel);
+                await _modelRepository.SaveAsync();
+                return true;
+            }
+            else 
+            {
+                return false;
+            }
         }
 
         public async Task DeleteModelById(int id)
         {
-            await _repository.Delete3DModelByIdAsync(id);
-            await _repository.SaveAsync();
+            await _modelRepository.Delete3DModelByIdAsync(id);
+            await _modelRepository.SaveAsync();
         }
 
         private async Task<byte[]> GetFileBytes(IFormFile file)
@@ -55,6 +63,6 @@ namespace _3DModelMax.Application.Services
                 file.CopyTo(newFile);
                 return newFile.ToArray();
             }
-        }
+        } 
     }
 }

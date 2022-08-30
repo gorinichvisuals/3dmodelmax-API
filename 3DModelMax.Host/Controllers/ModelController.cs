@@ -1,7 +1,5 @@
 ﻿using _3DModelMax.Application.Interfaces;
 using _3DModelMax.Application.Models;
-using _3DModelMax.Persistence.Interfaces;
-using _3DModelMax.Persistence.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -14,20 +12,16 @@ namespace _3DModelMax.Host.Controllers
     public class ModelController : ControllerBase
     {
         private IModelService _modelService;
-        private IAuthorService _authorService;
 
-        public ModelController(IModelService modelService, IAuthorService authorService)
+        public ModelController(IModelService modelService)
         {
             _modelService = modelService;
-            _authorService = authorService;
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateModel([FromForm] _3DModelDTO objModel)
         {
-            if (!ModelState.IsValid 
-                || objModel.File.Length == 0 
-                || !_authorService.GetAuthorsList().Result.Any(a => a.Id == objModel.AuthorId))
+            if (!ModelState.IsValid || objModel.File.Length == 0)
             {
                 return BadRequest();
             }
@@ -39,15 +33,17 @@ namespace _3DModelMax.Host.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateModel([FromForm] _3DModelUpdateDTO objModel)
         {
-            if (!ModelState.IsValid
-                || objModel.File.Length == 0
-                || !_authorService.GetAuthorsList().Result.Any(a => a.Id == objModel.AuthorId))
+            if (!ModelState.IsValid || objModel.File.Length == 0)
             {
                 return BadRequest();
             }
 
-            await _modelService.UpdateModel(objModel);
-            return Ok();
+            if (await _modelService.UpdateModel(objModel))
+            {
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
         [HttpDelete("{id:int}")]

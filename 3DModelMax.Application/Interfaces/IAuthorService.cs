@@ -11,6 +11,5 @@ namespace _3DModelMax.Application.Interfaces
     public interface IAuthorService
     {
         Task CreateAuthor(AuthorCreateDTO author);
-        Task<IEnumerable<Author>> GetAuthorsList();
     }
 }
