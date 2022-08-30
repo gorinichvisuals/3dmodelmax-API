@@ -16,9 +16,6 @@ namespace _3DModelMax.Application.Models
         public string Description { get; set; }
 
         [Required]
-        public int AuthorId { get; set; }
-
-        [Required]
         public IFormFile File { get; set; }
     }
 }

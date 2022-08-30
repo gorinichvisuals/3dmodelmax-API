@@ -1,5 +1,6 @@
 ﻿using _3DModelMax.Application.Interfaces;
 using _3DModelMax.Application.Models;
+using _3DModelMax.Persistence.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -26,8 +27,12 @@ namespace _3DModelMax.Host.Controllers
                 return BadRequest();
             }
 
-            await _modelService.CreateModel(objModel);
-            return Ok();
+            if(await _modelService.CreateModel(objModel))
+            {
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
         [HttpPut]
@@ -38,12 +43,8 @@ namespace _3DModelMax.Host.Controllers
                 return BadRequest();
             }
 
-            if (await _modelService.UpdateModel(objModel))
-            {
-                return Ok();
-            }
-
-            return BadRequest();
+            await _modelService.UpdateModel(objModel);           
+            return Ok();
         }
 
         [HttpDelete("{id:int}")]
