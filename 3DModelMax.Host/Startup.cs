@@ -29,6 +29,10 @@ public class Startup
 
         services.AddScoped<IAuthorRepository<Author>, SQLAuthorsRepository>();
         services.AddScoped<IAuthorService, AuthorService>();
+
+        services.AddScoped<IImageRepository<Image>, SQLImagesRepository>();
+        services.AddScoped<IImageService, ImageService>();
+
         services.AddControllersWithViews();
     }
 

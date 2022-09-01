@@ -7,7 +7,8 @@ namespace _3DModelMax.SQLPersistence
     {
         public DbSet<_3DModel> Models { get; set; }
         public DbSet<Author> Authors { get; set; }
-        
+        public DbSet<Image> Images { get; set; }
+
         public AddDbContext()
         {
             
