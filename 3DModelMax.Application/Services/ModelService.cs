@@ -11,11 +11,15 @@ namespace _3DModelMax.Application.Services
     {
         private readonly I3DModelRepository<_3DModel> _modelRepository;
         private readonly IAuthorRepository<Author> _authorRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ModelService(I3DModelRepository<_3DModel> modelRepository, IAuthorRepository<Author> authorRepository)
+        public ModelService(I3DModelRepository<_3DModel> modelRepository, 
+                            IAuthorRepository<Author> authorRepository, 
+                            IUnitOfWork unitOfWork)
         {
             _modelRepository = modelRepository;
             _authorRepository = authorRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<bool> CreateModel(_3DModelDTO objModel)
@@ -33,7 +37,7 @@ namespace _3DModelMax.Application.Services
                 model.AuthorId = objModel.AuthorId;
 
                 await _modelRepository.CreateAsync(model);
-                await _modelRepository.SaveAsync();
+                await _unitOfWork.Save();
 
                 return true;
             }
@@ -53,13 +57,13 @@ namespace _3DModelMax.Application.Services
             updModel.File = await GetFileBytes(objModel.File);
 
             _modelRepository.Update(updModel);
-            await _modelRepository.SaveAsync();            
+            await _unitOfWork.Save();
         }
 
         public async Task DeleteModelById(int id)
         {
             await _modelRepository.Delete3DModelByIdAsync(id);
-            await _modelRepository.SaveAsync();
+            await _unitOfWork.Save();
         }
 
         private async Task<byte[]> GetFileBytes(IFormFile file)

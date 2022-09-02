@@ -2,6 +2,7 @@
 using _3DModelMax.Application.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace _3DModelMax.Host.Controllers
 {
@@ -17,14 +18,15 @@ namespace _3DModelMax.Host.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddImages([FromForm] ImageDTO image)
+        [Route("{id:int}")]
+        public async Task<IActionResult> AddImages([FromBody][Required] ICollection<ImageDTO> images, int id)
         {
-            if (!ModelState.IsValid || image.Files.Count == null)
+            if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            if(await _imageService.AddImages(image))
+            if(await _imageService.AddImages(images, id))                                                   
             {
                 return Ok();
             }

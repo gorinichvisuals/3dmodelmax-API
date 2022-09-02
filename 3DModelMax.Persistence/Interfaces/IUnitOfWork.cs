@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace _3DModelMax.Persistence.Interfaces
 {
-    public interface IImageRepository<T>
+    public interface IUnitOfWork
     {
-        Task AddImages(ICollection<T> items);
-        Task DeleteImageById(int id);
-        void UpdateImages(T item);
+        Task Save();
     }
 }

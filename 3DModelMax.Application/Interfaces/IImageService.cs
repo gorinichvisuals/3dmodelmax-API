@@ -10,6 +10,6 @@ namespace _3DModelMax.Application.Interfaces
 {
     public interface IImageService
     {
-        Task<bool> AddImages(ImageDTO images);
+        Task<bool> AddImages(ICollection<ImageDTO> images, int _3DModelId);
     }
 }

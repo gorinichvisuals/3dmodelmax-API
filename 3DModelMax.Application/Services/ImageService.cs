@@ -16,50 +16,33 @@ namespace _3DModelMax.Application.Services
     public class ImageService : IImageService
     {
         private readonly IImageRepository<Image> _repository;
-        private readonly I3DModelRepository<_3DModel> _modelRepository;
+        private readonly I3DModelRepository<_3DModel> _repositoryModel;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ImageService(IImageRepository<Image> repository, I3DModelRepository<_3DModel> modelRepository)
+        public ImageService(IImageRepository<Image> repository, 
+                            I3DModelRepository<_3DModel> repositoryModel, 
+                            IUnitOfWork unitOfWork)
         {
             _repository = repository;
-            _modelRepository = modelRepository;
+            _repositoryModel = repositoryModel;
+            _unitOfWork = unitOfWork;
         }
 
-        public async Task<bool> AddImages(ImageDTO images)
+        public async Task<bool> AddImages(ICollection<ImageDTO> imageDTOs, int _3DModelId)
         {
-            var model = await _modelRepository.Get3DModelByIdAsync(images._3DModelId);
+            var model = await _repositoryModel.Get3DModelByIdAsync(_3DModelId);
 
             if (model != null)
             {
-                var imagesList = new List<string>();
-                imagesList = await GetImages(images.File);
+                var images = imageDTOs.Select(dto => new Image { File = dto.File }).ToArray();
+
+                await _repository.AddImages(images);
+                await _unitOfWork.Save();
 
                 return true;
             }
-            else 
-            {
-                return false;
-            }
-        }
 
-        private async Task<List<string>> GetImages(List<IFormFile> files) 
-        {
-            List<string> uploadImages = new List<string>();
-
-            foreach(IFormFile file in files)
-            {
-                string fileName = Path.GetFileName(file.FileName);
-                var result = new StringBuilder();
-
-                await using (var fileStream = new MemoryStream())
-                {
-                    file.CopyTo(fileStream);
-                    uploadImages.Add(fileName);
-                    result.AppendLine(fileStream.ToString());
-                    uploadImages.Add(result.ToString());
-                }
-            }
-
-            return uploadImages;
-        }
+            return false;
+        }       
     }
 }

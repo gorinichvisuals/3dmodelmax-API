@@ -11,7 +11,6 @@ namespace _3DModelMax.Persistence.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
         public int _3DmodelId { get; set; }
         public _3DModel _3DModel { get; set; }
         public string File { get; set; }

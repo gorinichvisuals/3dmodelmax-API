@@ -1,4 +1,5 @@
-﻿using _3DModelMax.Application.Models;
+﻿/*
+using _3DModelMax.Application.Models;
 using _3DModelMax.Persistence.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -63,3 +64,4 @@ namespace _3DModelMax.Host.Controllers
         }
     }
 }
+*/

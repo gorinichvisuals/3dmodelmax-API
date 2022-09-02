@@ -33,6 +33,8 @@ public class Startup
         services.AddScoped<IImageRepository<Image>, SQLImagesRepository>();
         services.AddScoped<IImageService, ImageService>();
 
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+
         services.AddControllersWithViews();
     }
 
