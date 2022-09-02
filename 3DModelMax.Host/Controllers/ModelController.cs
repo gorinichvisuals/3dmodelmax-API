@@ -20,7 +20,7 @@ namespace _3DModelMax.Host.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateModel([FromForm] _3DModelDTO objModel, ICollection<ImageDTO> images)
+        public async Task<IActionResult> CreateModel([FromForm] _3DModelDTO objModel)
         {
             if (!ModelState.IsValid || objModel.File.Length == 0)
             {
@@ -28,7 +28,7 @@ namespace _3DModelMax.Host.Controllers
             }
 
             return await _modelService.
-                                    CreateModel(objModel, images) 
+                                    CreateModel(objModel) 
                                     ? Ok() 
                                     : BadRequest();
         }

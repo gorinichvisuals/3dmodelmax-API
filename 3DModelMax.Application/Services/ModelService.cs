@@ -25,7 +25,7 @@ namespace _3DModelMax.Application.Services
             _imageService = imageService;
         }
 
-        public async Task<bool> CreateModel(_3DModelDTO objModel, ICollection<ImageDTO> imageDTOs)
+        public async Task<bool> CreateModel(_3DModelDTO objModel)
         {
             var author = await _authorRepository.GetAuthorById(objModel.AuthorId);
 
@@ -42,7 +42,7 @@ namespace _3DModelMax.Application.Services
                 await _modelRepository.CreateAsync(model);
                 await _unitOfWork.Save();
 
-                await _imageService.AddImages(imageDTOs, model.Id);
+                await _imageService.AddImages(objModel.Images, model.Id);
 
                 return true;
             }
