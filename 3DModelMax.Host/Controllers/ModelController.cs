@@ -27,10 +27,9 @@ namespace _3DModelMax.Host.Controllers
                 return BadRequest();
             }
 
-            return await _modelService.
-                                    CreateModel(objModel) 
-                                    ? Ok() 
-                                    : BadRequest();
+            return await _modelService.CreateModel(objModel) 
+                                      ? Ok() 
+                                      : BadRequest();
         }
 
         [HttpPut]
