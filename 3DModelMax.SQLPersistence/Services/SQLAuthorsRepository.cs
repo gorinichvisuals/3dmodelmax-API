@@ -48,10 +48,5 @@ namespace _3DModelMax.SQLPersistence.Services
         {
             db.Authors.Update(author);
         }
-
-        public async Task SaveAuthor()
-        {
-            await db.SaveChangesAsync();
-        }
     }
 }

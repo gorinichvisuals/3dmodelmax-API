@@ -13,5 +13,6 @@ namespace _3DModelMax.Persistence.Models
         public Author Author { get; set; } 
         public byte[] File { get; set; }
         public DateTime? LastUpdated { get; set; }
+        public ICollection<Image> Images { get; set; }
     }
 }

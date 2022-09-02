@@ -13,10 +13,11 @@ namespace _3DModelMax.Application.Services
     public class AuthorService : IAuthorService
     {
         private readonly IAuthorRepository<Author> _repository;
-
-        public AuthorService(IAuthorRepository<Author> repository)
+        private readonly IUnitOfWork _unitOfWork;
+        public AuthorService(IAuthorRepository<Author> repository, IUnitOfWork unitOfWork)
         {
             _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task CreateAuthor(AuthorCreateDTO author)
@@ -34,7 +35,7 @@ namespace _3DModelMax.Application.Services
             };
 
             await _repository.CreateAuthor(createAuthor);
-            await _repository.SaveAuthor();
+            await _unitOfWork.Save();
         }
     }
 }

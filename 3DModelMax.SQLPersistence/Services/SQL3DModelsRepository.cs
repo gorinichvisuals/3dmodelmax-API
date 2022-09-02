@@ -43,10 +43,5 @@ namespace _3DModelMax.SQLPersistence.Services
                 db.Models.Remove(_3dmodel);
             }
         }
-
-        public async Task SaveAsync()
-        {
-            await db.SaveChangesAsync();
-        }
     }
 }
