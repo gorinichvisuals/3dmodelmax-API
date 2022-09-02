@@ -13,12 +13,10 @@ namespace _3DModelMax.Host.Controllers
     public class ModelController : ControllerBase
     {
         private IModelService _modelService;
-        private IImageService _imageService;
 
-        public ModelController(IModelService modelService, IImageService imageService)
+        public ModelController(IModelService modelService)
         {
             _modelService = modelService;
-            _imageService = imageService;
         }
 
         [HttpPost]
