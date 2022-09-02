@@ -6,7 +6,7 @@ namespace _3DModelMax.Application.Interfaces
 {
     public interface IModelService
     {
-        Task<bool> CreateModel(_3DModelDTO objModel);
+        Task<bool> CreateModel(_3DModelDTO objModel, ICollection<ImageDTO> imageDTOs);
         Task UpdateModel(_3DModelUpdateDTO objModel);
         Task DeleteModelById(int id);
     }

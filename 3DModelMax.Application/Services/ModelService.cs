@@ -12,17 +12,20 @@ namespace _3DModelMax.Application.Services
         private readonly I3DModelRepository<_3DModel> _modelRepository;
         private readonly IAuthorRepository<Author> _authorRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IImageService _imageService;
 
         public ModelService(I3DModelRepository<_3DModel> modelRepository, 
-                            IAuthorRepository<Author> authorRepository, 
-                            IUnitOfWork unitOfWork)
+                            IAuthorRepository<Author> authorRepository,
+                            IUnitOfWork unitOfWork,
+                            IImageService imageService)
         {
             _modelRepository = modelRepository;
             _authorRepository = authorRepository;
             _unitOfWork = unitOfWork;
+            _imageService = imageService;
         }
 
-        public async Task<bool> CreateModel(_3DModelDTO objModel)
+        public async Task<bool> CreateModel(_3DModelDTO objModel, ICollection<ImageDTO> imageDTOs)
         {
             var author = await _authorRepository.GetAuthorById(objModel.AuthorId);
 
@@ -38,6 +41,8 @@ namespace _3DModelMax.Application.Services
 
                 await _modelRepository.CreateAsync(model);
                 await _unitOfWork.Save();
+
+                await _imageService.AddImages(imageDTOs, model.Id);
 
                 return true;
             }

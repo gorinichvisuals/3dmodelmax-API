@@ -13,26 +13,26 @@ namespace _3DModelMax.Host.Controllers
     public class ModelController : ControllerBase
     {
         private IModelService _modelService;
+        private IImageService _imageService;
 
-        public ModelController(IModelService modelService)
+        public ModelController(IModelService modelService, IImageService imageService)
         {
             _modelService = modelService;
+            _imageService = imageService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateModel([FromForm] _3DModelDTO objModel)
+        public async Task<IActionResult> CreateModel([FromForm] _3DModelDTO objModel, ICollection<ImageDTO> images)
         {
             if (!ModelState.IsValid || objModel.File.Length == 0)
             {
                 return BadRequest();
             }
 
-            if(await _modelService.CreateModel(objModel))
-            {
-                return Ok();
-            }
-
-            return BadRequest();
+            return await _modelService.
+                                    CreateModel(objModel, images) 
+                                    ? Ok() 
+                                    : BadRequest();
         }
 
         [HttpPut]
@@ -43,7 +43,8 @@ namespace _3DModelMax.Host.Controllers
                 return BadRequest();
             }
 
-            await _modelService.UpdateModel(objModel);           
+            await _modelService.UpdateModel(objModel);
+           
             return Ok();
         }
 
