@@ -35,7 +35,7 @@ namespace _3DModelMax.Host.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, "Failed to create this entity");
+                return StatusCode(500, "Failed to create this 3D model");
             }
         }
 
@@ -55,7 +55,7 @@ namespace _3DModelMax.Host.Controllers
             }            
             catch (Exception)
             {
-                return StatusCode(500, "Failed to update this entity");
+                return StatusCode(500, "Failed to update this 3D model");
             }
         }
 
@@ -74,7 +74,7 @@ namespace _3DModelMax.Host.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, "Failed to delete this entity");
+                return StatusCode(500, "Failed to delete this 3D model");
             }
         }
     }

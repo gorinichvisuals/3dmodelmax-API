@@ -36,7 +36,7 @@ namespace _3DModelMax.Host.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, "Failed to create this entity");
+                return StatusCode(500, "Failed to create this images");
             }
         }
     }
