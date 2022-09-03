@@ -3,6 +3,8 @@ using _3DModelMax.Application.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
+using static System.Net.WebRequestMethods;
 
 namespace _3DModelMax.Host.Controllers
 {
@@ -21,17 +23,21 @@ namespace _3DModelMax.Host.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> AddImages([FromBody][Required] ICollection<ImageDTO> images, int id)
         {
-            if (!ModelState.IsValid)
+            try 
             {
-                return BadRequest();
-            }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest();
+                }
 
-            if(await _imageService.AddImages(images, id))                                                   
+                return await _imageService.AddImages(images, id)
+                                          ? Ok()
+                                          : BadRequest();
+            }
+            catch (Exception)
             {
-                return Ok();
+                return StatusCode(500, "Failed to create this images");
             }
-
-            return BadRequest();
         }
     }
 }

@@ -19,13 +19,20 @@ namespace _3DModelMax.Host.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAuthor([FromBody] AuthorCreateDTO author)
         {
-            if (!ModelState.IsValid) 
-            { 
-                return BadRequest(); 
-            }
+            try 
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest();
+                }
 
-            await authorService.CreateAuthor(author);
-            return Ok();
+                await authorService.CreateAuthor(author);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Failed to create this author");
+            }           
         }
     }
 }

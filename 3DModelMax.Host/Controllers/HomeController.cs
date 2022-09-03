@@ -17,7 +17,7 @@ namespace _3DModelMax.Host.Controllers
         {
             return View();
         }
-
+        /*
         [Route("upload")]
         [HttpPost]
         public IActionResult UploadModel(IFormFile _3DModelDTO)
@@ -29,5 +29,6 @@ namespace _3DModelMax.Host.Controllers
 
             return RedirectToAction("Index");
         }
+        */
     }
 }

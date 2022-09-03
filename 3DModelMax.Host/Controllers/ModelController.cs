@@ -22,39 +22,60 @@ namespace _3DModelMax.Host.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateModel([FromForm] _3DModelDTO objModel)
         {
-            if (!ModelState.IsValid || objModel.File.Length == 0)
+            try 
             {
-                return BadRequest();
-            }
+                if (!ModelState.IsValid || objModel.File.Length == 0)
+                {
+                    return BadRequest();
+                }
 
-            return await _modelService.CreateModel(objModel) 
-                                      ? Ok() 
-                                      : BadRequest();
+                return await _modelService.CreateModel(objModel)
+                                          ? Ok()
+                                          : BadRequest();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Failed to create this 3D model");
+            }
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateModel([FromForm] _3DModelUpdateDTO objModel)
         {
-            if (!ModelState.IsValid || objModel.File.Length == 0)
+            try 
             {
-                return BadRequest();
-            }
+                if (!ModelState.IsValid || objModel.File.Length == 0)
+                {
+                    return BadRequest();
+                }
 
-            await _modelService.UpdateModel(objModel);
-           
-            return Ok();
+                await _modelService.UpdateModel(objModel);
+
+                return Ok();
+            }            
+            catch (Exception)
+            {
+                return StatusCode(500, "Failed to update this 3D model");
+            }
         }
 
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteModelById(int id)
         {
-            if (!ModelState.IsValid)
+            try 
             {
-                return BadRequest();
-            }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest();
+                }
 
-            await _modelService.DeleteModelById(id);
-            return Ok();
+                await _modelService.DeleteModelById(id);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Failed to delete this 3D model");
+            }
         }
     }
 }

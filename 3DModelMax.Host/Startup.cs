@@ -5,6 +5,7 @@ using _3DModelMax.Persistence.Models;
 using _3DModelMax.Persistence.Services;
 using _3DModelMax.SQLPersistence;
 using _3DModelMax.SQLPersistence.Services;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
 public class Startup
@@ -46,8 +47,11 @@ public class Startup
         }
         else 
         {
+            app.UseExceptionHandler();
             app.UseHsts();
         }
+
+        //app.UseStatusCodePages();
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
