@@ -17,5 +17,8 @@ namespace _3DModelMax.Application.Models
 
         [Required]
         public IFormFile File { get; set; }
+
+        [Required]
+        public ICollection<ImageDTO> Images { get; set; }
     }
 }
