@@ -51,7 +51,7 @@ public class Startup
             app.UseHsts();
         }
 
-        app.UseStatusCodePages();
+        //app.UseStatusCodePages();
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();

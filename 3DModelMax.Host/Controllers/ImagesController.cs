@@ -34,9 +34,9 @@ namespace _3DModelMax.Host.Controllers
                                           ? Ok()
                                           : BadRequest();
             }
-            catch (WebException)
+            catch (Exception)
             {
-                return StatusCode(500);
+                return StatusCode(500, "Failed to create this entity");
             }
         }
     }
