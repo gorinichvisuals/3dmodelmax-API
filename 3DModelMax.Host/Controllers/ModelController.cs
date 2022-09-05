@@ -39,8 +39,8 @@ namespace _3DModelMax.Host.Controllers
             }
             catch (Exception exception)
             {
-                _logger.LogError("Internal error 500 {0}", exception);
-                return StatusCode(500, "Failed to create this 3D model");
+                _logger.LogError(exception, "Failed to create 3D model");
+                return StatusCode(500, "Failed to create 3D model");
             }
         }
 
@@ -61,8 +61,8 @@ namespace _3DModelMax.Host.Controllers
             }            
             catch (Exception exception)
             {
-                _logger.LogError("Internal error 500 {0}", exception);
-                return StatusCode(500, "Failed to update this 3D model");
+                _logger.LogError(exception, "Failed to update 3D model");
+                return StatusCode(500, "Failed to update 3D model");
             }
         }
         
@@ -83,8 +83,8 @@ namespace _3DModelMax.Host.Controllers
             }
             catch (Exception exception)
             {
-                _logger.LogError("Internal error 500 {0}", exception);
-                return StatusCode(500, "Failed to delete this 3D model");
+                _logger.LogError(exception, "Failed to delete 3D model");
+                return StatusCode(500, "Failed to delete 3D model");
             }
         }
 
@@ -97,16 +97,16 @@ namespace _3DModelMax.Host.Controllers
                 {
                     return BadRequest();                   
                 }
-
-                _logger.LogInformation("Model not found: " + id);
+                
+                _logger.LogInformation("Model found: " + id);
 
                 await _modelService.GetModelById(id);
-                    return Ok();
+                    return Ok(); 
             }
             catch(Exception exception)
             {
-                _logger.LogError("Internal error 500 {0}", exception);
-                return StatusCode(500, "Failed to get this 3D model");
+                _logger.LogError(exception, "Failed to get 3D model");
+                return StatusCode(500, "Failed to get 3D model");
             }
         }
     }

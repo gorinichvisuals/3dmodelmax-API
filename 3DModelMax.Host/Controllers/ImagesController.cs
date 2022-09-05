@@ -39,8 +39,8 @@ namespace _3DModelMax.Host.Controllers
             }
             catch (Exception exception) 
             {
-                _logger.LogError("Internal error 500 {0}", exception);
-                return StatusCode(500, "Failed to create this images"); 
+                _logger.LogError(exception, "Failed to create images");
+                return StatusCode(500, "Failed to create images"); 
             }
         }
     }

@@ -35,8 +35,8 @@ namespace _3DModelMax.Host.Controllers
             }
             catch (Exception exception)
             {
-                _logger.LogError("Internal error 500 {0}", exception);
-                return StatusCode(500, "Failed to create this author");
+                _logger.LogError(exception, "Failed to create author");
+                return StatusCode(500, "Failed to create author");
             }           
         }
     }
