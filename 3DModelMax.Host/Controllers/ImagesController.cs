@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
-using static System.Net.WebRequestMethods;
 
 namespace _3DModelMax.Host.Controllers
 {
@@ -13,10 +12,12 @@ namespace _3DModelMax.Host.Controllers
     public class ImagesController : ControllerBase
     {
         private IImageService _imageService;
+        private ILogger<ImagesController> _logger;
 
-        public ImagesController(IImageService imageService)
+        public ImagesController(IImageService imageService, ILogger<ImagesController> logger)
         {
             _imageService = imageService;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -30,13 +31,16 @@ namespace _3DModelMax.Host.Controllers
                     return BadRequest();
                 }
 
+                _logger.LogInformation("Add images: " + images);
+
                 return await _imageService.AddImages(images, id)
                                           ? Ok()
                                           : BadRequest();
             }
-            catch (Exception)
+            catch (Exception exception) 
             {
-                return StatusCode(500, "Failed to create this images");
+                _logger.LogError("Internal error 500 {0}", exception);
+                return StatusCode(500, "Failed to create this images"); 
             }
         }
     }

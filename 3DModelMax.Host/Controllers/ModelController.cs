@@ -13,10 +13,12 @@ namespace _3DModelMax.Host.Controllers
     public class ModelController : ControllerBase
     {
         private IModelService _modelService;
+        private ILogger<ModelController> _logger;
 
-        public ModelController(IModelService modelService)
+        public ModelController(IModelService modelService, ILogger<ModelController> logger)
         {
             _modelService = modelService;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -29,12 +31,15 @@ namespace _3DModelMax.Host.Controllers
                     return BadRequest();
                 }
 
+                _logger.LogInformation("Model is created: " + objModel);
+
                 return await _modelService.CreateModel(objModel)
                                           ? Ok()
                                           : BadRequest();
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                _logger.LogError("Internal error 500 {0}", exception);
                 return StatusCode(500, "Failed to create this 3D model");
             }
         }
@@ -49,16 +54,18 @@ namespace _3DModelMax.Host.Controllers
                     return BadRequest();
                 }
 
-                await _modelService.UpdateModel(objModel);
+                _logger.LogInformation("Model is updated: " + objModel);
 
-                return Ok();
+                await _modelService.UpdateModel(objModel);
+                    return Ok();
             }            
-            catch (Exception)
+            catch (Exception exception)
             {
+                _logger.LogError("Internal error 500 {0}", exception);
                 return StatusCode(500, "Failed to update this 3D model");
             }
         }
-
+        
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteModelById(int id)
         {
@@ -69,12 +76,37 @@ namespace _3DModelMax.Host.Controllers
                     return BadRequest();
                 }
 
+                _logger.LogInformation("Model is deleted: " + id);
+
                 await _modelService.DeleteModelById(id);
-                return Ok();
+                    return Ok();
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                _logger.LogError("Internal error 500 {0}", exception);
                 return StatusCode(500, "Failed to delete this 3D model");
+            }
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetModel(int id)
+        {
+            try
+            {
+                if (!ModelState.IsValid) 
+                {
+                    return BadRequest();                   
+                }
+
+                _logger.LogInformation("Model not found: " + id);
+
+                await _modelService.GetModelById(id);
+                    return Ok();
+            }
+            catch(Exception exception)
+            {
+                _logger.LogError("Internal error 500 {0}", exception);
+                return StatusCode(500, "Failed to get this 3D model");
             }
         }
     }
