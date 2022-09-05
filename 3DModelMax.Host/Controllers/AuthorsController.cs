@@ -10,10 +10,12 @@ namespace _3DModelMax.Host.Controllers
     public class AuthorsController : ControllerBase
     {
         private IAuthorService authorService;
+        private ILogger<AuthorsController> _logger;
 
-        public AuthorsController(IAuthorService authorService)
+        public AuthorsController(IAuthorService authorService, ILogger<AuthorsController> logger)
         {
             this.authorService = authorService;
+            _logger = logger;   
         }
 
         [HttpPost]
@@ -27,11 +29,14 @@ namespace _3DModelMax.Host.Controllers
                 }
 
                 await authorService.CreateAuthor(author);
+                _logger.LogInformation("Author is created: " + author);
+
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                return StatusCode(500, "Failed to create this author");
+                _logger.LogError(exception, "Failed to create author");
+                return StatusCode(500, "Failed to create author");
             }           
         }
     }

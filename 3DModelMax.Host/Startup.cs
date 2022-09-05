@@ -7,6 +7,7 @@ using _3DModelMax.SQLPersistence;
 using _3DModelMax.SQLPersistence.Services;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 public class Startup
 {   
@@ -52,7 +53,7 @@ public class Startup
         }
 
         //app.UseStatusCodePages();
-
+        app.UseSerilogRequestLogging();
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 
@@ -69,7 +70,7 @@ public class Startup
         //app.MapControllerRoute(
         //    name: "default",
         //    pattern: "{controller=Home}/{action=Index}/{id?}");
-        app.Run(async (context) => await context.Response.WriteAsync("Could Not Find Anything"));
+        app.Run(async (context) => await context.Response.WriteAsync("Hello world"));
     }
 }
 

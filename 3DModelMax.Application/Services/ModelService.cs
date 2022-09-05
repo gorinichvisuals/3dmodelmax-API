@@ -70,6 +70,10 @@ namespace _3DModelMax.Application.Services
             await _modelRepository.Delete3DModelByIdAsync(id);
             await _unitOfWork.Save();
         }
+        public async Task GetModelById(int id) 
+        {
+            await _modelRepository.Get3DModelByIdAsync(id);
+        }
 
         private async Task<byte[]> GetFileBytes(IFormFile file)
         {

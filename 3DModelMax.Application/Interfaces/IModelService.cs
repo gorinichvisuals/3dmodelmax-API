@@ -8,6 +8,7 @@ namespace _3DModelMax.Application.Interfaces
     {
         Task<bool> CreateModel(_3DModelDTO objModel);
         Task UpdateModel(_3DModelUpdateDTO objModel);
-        Task DeleteModelById(int id);
+        Task DeleteModelById(int _3DModelId);
+        Task GetModelById(int _3DModelId);
     }
 }

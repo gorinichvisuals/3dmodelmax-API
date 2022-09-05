@@ -21,7 +21,10 @@ namespace _3DModelMax.SQLPersistence.Services
 
         public async Task<_3DModel> Get3DModelByIdAsync(int id)
         {
-            return await db.Models.AsNoTracking().Where(x => x.Id == id).FirstOrDefaultAsync();
+            return await db.Models.AsNoTracking()
+                                  .Include(x => x.Images)
+                                  .Where(x => x.Id == id)
+                                  .FirstOrDefaultAsync();
         }
 
         public async Task CreateAsync(_3DModel _3dmodel)
@@ -36,7 +39,9 @@ namespace _3DModelMax.SQLPersistence.Services
 
         public async Task Delete3DModelByIdAsync(int id)
         {
-            _3DModel _3dmodel = await db.Models.FindAsync(id);
+            _3DModel _3dmodel = await db.Models
+                .Include(x => x.Images)
+                .FirstOrDefaultAsync(i => i.Id == id);
 
             if (_3dmodel != null)
             {
