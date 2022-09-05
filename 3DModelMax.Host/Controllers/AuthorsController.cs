@@ -28,10 +28,10 @@ namespace _3DModelMax.Host.Controllers
                     return BadRequest();
                 }
 
+                await authorService.CreateAuthor(author);
                 _logger.LogInformation("Author is created: " + author);
 
-                await authorService.CreateAuthor(author);
-                    return Ok();
+                return Ok();
             }
             catch (Exception exception)
             {

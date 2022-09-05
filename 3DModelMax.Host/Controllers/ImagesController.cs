@@ -31,11 +31,13 @@ namespace _3DModelMax.Host.Controllers
                     return BadRequest();
                 }
 
-                _logger.LogInformation("Add images: " + images);
+                if (await _imageService.AddImages(images, id))
+                {
+                    _logger.LogInformation("Add images: " + images);
+                    return Ok();
+                }
 
-                return await _imageService.AddImages(images, id)
-                                          ? Ok()
-                                          : BadRequest();
+                return BadRequest();
             }
             catch (Exception exception) 
             {

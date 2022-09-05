@@ -24,18 +24,20 @@ namespace _3DModelMax.Host.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateModel([FromForm] _3DModelDTO objModel)
         {
-            try 
+            try
             {
                 if (!ModelState.IsValid || objModel.File.Length == 0)
                 {
                     return BadRequest();
                 }
 
-                _logger.LogInformation("Model is created: " + objModel);
-
-                return await _modelService.CreateModel(objModel)
-                                          ? Ok()
-                                          : BadRequest();
+                if(await _modelService.CreateModel(objModel))
+                {
+                    _logger.LogInformation("Model is created: " + objModel);
+                    return Ok();
+                }
+               
+                return BadRequest();
             }
             catch (Exception exception)
             {
@@ -54,10 +56,10 @@ namespace _3DModelMax.Host.Controllers
                     return BadRequest();
                 }
 
+                await _modelService.UpdateModel(objModel);
                 _logger.LogInformation("Model is updated: " + objModel);
 
-                await _modelService.UpdateModel(objModel);
-                    return Ok();
+                return Ok();
             }            
             catch (Exception exception)
             {
@@ -76,10 +78,11 @@ namespace _3DModelMax.Host.Controllers
                     return BadRequest();
                 }
 
+                await _modelService.DeleteModelById(id);
                 _logger.LogInformation("Model is deleted: " + id);
 
-                await _modelService.DeleteModelById(id);
-                    return Ok();
+                return Ok();
+
             }
             catch (Exception exception)
             {
@@ -97,11 +100,11 @@ namespace _3DModelMax.Host.Controllers
                 {
                     return BadRequest();                   
                 }
-                
+               
+                await _modelService.GetModelById(id);
                 _logger.LogInformation("Model found: " + id);
 
-                await _modelService.GetModelById(id);
-                    return Ok(); 
+                return Ok(); 
             }
             catch(Exception exception)
             {
