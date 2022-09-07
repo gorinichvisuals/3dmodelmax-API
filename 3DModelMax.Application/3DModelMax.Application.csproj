@@ -1,20 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>_3DModelMax.Application</RootNamespace>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<RootNamespace>_3DModelMax.Application</RootNamespace>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\3DModelMax.Domain\3DModelMax.Domain.csproj" />
-    <ProjectReference Include="..\3DModelMax.Persistence\3DModelMax.Persistence.csproj" />
-    <ProjectReference Include="..\3DModelMax.SQLPersistence\3DModelMax.SQLPersistence.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\3DModelMax.Domain\3DModelMax.Domain.csproj" />
+		<ProjectReference Include="..\3DModelMax.Persistence\3DModelMax.Persistence.csproj" />
+		<ProjectReference Include="..\3DModelMax.SQLPersistence\3DModelMax.SQLPersistence.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+	</ItemGroup>
 
 </Project>

@@ -5,6 +5,7 @@ using _3DModelMax.Persistence.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,8 +21,10 @@ namespace _3DModelMax.Application.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task CreateAuthor(AuthorCreateDTO author)
+        public async Task AuthorRegistration(AuthorRegistrationDTO author)
         {
+            CreatePasswordHash(author.Password, out byte[] passwordHash, out byte[] passwordSalt);
+
             var createAuthor = new Author
             {
                 FirstName = author.FirstName,
@@ -31,11 +34,21 @@ namespace _3DModelMax.Application.Services
                 Description = author.Description,
                 RegistrationDate = DateTime.Now,
                 Email = author.Email,
-                Password = author.Password
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt
             };
 
             await _repository.CreateAuthor(createAuthor);
             await _unitOfWork.Save();
+        }
+
+        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using (var hmac = new HMACSHA512())
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            }
         }
     }
 }

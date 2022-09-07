@@ -13,5 +13,7 @@ namespace _3DModelMax.Persistence.Interfaces
         Task DeleteAuthorById(int id);
         Task CreateAuthor(T item);
         void UpdateAuthor(T item);
+        Task<T> GetAuthor(string nickname);
     }
 }
+

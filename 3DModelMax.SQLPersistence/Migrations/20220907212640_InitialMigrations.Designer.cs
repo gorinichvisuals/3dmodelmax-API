@@ -12,8 +12,8 @@ using _3DModelMax.SQLPersistence;
 namespace _3DModelMax.SQLPersistence.Migrations
 {
     [DbContext(typeof(AddDbContext))]
-    [Migration("20220824130838_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20220907212640_InitialMigrations")]
+    partial class InitialMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,6 +43,9 @@ namespace _3DModelMax.SQLPersistence.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<DateTime?>("LastUpdated")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -68,6 +71,14 @@ namespace _3DModelMax.SQLPersistence.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -76,12 +87,50 @@ namespace _3DModelMax.SQLPersistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("NickName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Authors");
+                });
+
+            modelBuilder.Entity("_3DModelMax.Persistence.Models.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("File")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("_3DmodelId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("_3DmodelId");
+
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("_3DModelMax.Persistence.Models._3DModel", b =>
@@ -93,6 +142,22 @@ namespace _3DModelMax.SQLPersistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("_3DModelMax.Persistence.Models.Image", b =>
+                {
+                    b.HasOne("_3DModelMax.Persistence.Models._3DModel", "_3DModel")
+                        .WithMany("Images")
+                        .HasForeignKey("_3DmodelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("_3DModel");
+                });
+
+            modelBuilder.Entity("_3DModelMax.Persistence.Models._3DModel", b =>
+                {
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("_3DModelMax.Persistence.Models.Author", b =>

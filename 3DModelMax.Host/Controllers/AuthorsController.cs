@@ -1,11 +1,13 @@
 ﻿using _3DModelMax.Application.Interfaces;
 using _3DModelMax.Application.Models;
+using _3DModelMax.Persistence.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace _3DModelMax.Host.Controllers
 {
-    [Route("api/authors")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AuthorsController : ControllerBase
     {
@@ -15,20 +17,20 @@ namespace _3DModelMax.Host.Controllers
         public AuthorsController(IAuthorService authorService, ILogger<AuthorsController> logger)
         {
             this.authorService = authorService;
-            _logger = logger;   
+            _logger = logger;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateAuthor([FromBody] AuthorCreateDTO author)
+        [HttpPost("register")]
+        public async Task<IActionResult> Registration([FromBody] AuthorRegistrationDTO author)
         {
-            try 
+            try
             {
                 if (!ModelState.IsValid)
                 {
                     return BadRequest();
                 }
 
-                await authorService.CreateAuthor(author);
+                await authorService.AuthorRegistration(author);
                 _logger.LogInformation("Author is created: " + author);
 
                 return Ok();
@@ -37,7 +39,7 @@ namespace _3DModelMax.Host.Controllers
             {
                 _logger.LogError(exception, "Failed to create author");
                 return StatusCode(500, "Failed to create author");
-            }           
+            }
         }
     }
 }
