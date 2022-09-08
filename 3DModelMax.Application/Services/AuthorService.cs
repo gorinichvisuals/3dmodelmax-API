@@ -34,6 +34,7 @@ namespace _3DModelMax.Application.Services
                 Description = author.Description,
                 RegistrationDate = DateTime.Now,
                 Email = author.Email,
+                Role = "Author",
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt
             };
