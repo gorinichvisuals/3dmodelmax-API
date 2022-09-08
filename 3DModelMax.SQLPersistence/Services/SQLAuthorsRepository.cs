@@ -39,6 +39,11 @@ namespace _3DModelMax.SQLPersistence.Services
             }
         }
 
+        public async Task<Author> GetAuthor(string nickname)
+        {
+            return await db.Authors.AsNoTracking().FirstOrDefaultAsync(a => a.NickName == nickname);
+        }
+
         public async Task CreateAuthor(Author author)
         {
             await db.Authors.AddAsync(author);

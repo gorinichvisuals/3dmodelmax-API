@@ -14,6 +14,8 @@ namespace _3DModelMax.Persistence.Models
         public DateTime RegistrationDate { get; set; }
         public ICollection<_3DModel> _3DModels { get; set; }
         public string Email { get; set; }
-        public string Password { get; set; }
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
+        public string Role { get; set; }
     }
 }

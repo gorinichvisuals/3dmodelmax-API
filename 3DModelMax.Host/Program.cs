@@ -10,8 +10,8 @@ public class Program
             .Enrich.FromLogContext()
             .WriteTo.Console()
             .CreateLogger();
-            
-        try 
+
+        try
         {
             Log.Information("Starting web host");
             CreateHostBuilder(args).Build().Run();

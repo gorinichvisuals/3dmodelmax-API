@@ -5,14 +5,17 @@ using _3DModelMax.Persistence.Models;
 using _3DModelMax.Persistence.Services;
 using _3DModelMax.SQLPersistence;
 using _3DModelMax.SQLPersistence.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using System.Text;
 
 public class Startup
-{   
+{
     public Startup(IConfiguration configuration)
-    {      
+    {
         Configuration = configuration;
     }
 
@@ -37,39 +40,52 @@ public class Startup
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
+
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options => {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                };
+            });
         services.AddControllersWithViews();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-    { 
-        if(env.IsDevelopment())
+    {
+        if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
         }
-        else 
+        else
         {
             app.UseExceptionHandler();
             app.UseHsts();
         }
 
-        //app.UseStatusCodePages();
         app.UseSerilogRequestLogging();
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 
         app.UseRouting();
 
-        app.UseAuthorization();
         app.UseAuthentication();
+        app.UseAuthorization();
+
         app.UseEndpoints(endpoints => endpoints.MapControllers());
 
         using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
         using var context = serviceScope.ServiceProvider.GetRequiredService<AddDbContext>();
-        context.Database.EnsureCreated();
-        context.Database.Migrate();
-        //app.MapControllerRoute(
-        //    name: "default",
-        //    pattern: "{controller=Home}/{action=Index}/{id?}");
+        //context.Database.EnsureCreated();
+        //context.Database.Migrate();
+
         app.Run(async (context) => await context.Response.WriteAsync("Hello world"));
     }
 }

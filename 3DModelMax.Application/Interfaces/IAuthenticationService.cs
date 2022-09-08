@@ -1,5 +1,4 @@
 ﻿using _3DModelMax.Application.Models;
-using _3DModelMax.Persistence.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace _3DModelMax.Application.Interfaces
 {
-    public interface IAuthorService
+    public interface IAuthenticationService
     {
-        Task CreateAuthor(CreateAuthorDTO author);
+        Task<string> Login(LoginDTO authorRequest);
     }
 }
+
