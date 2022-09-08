@@ -30,7 +30,7 @@ namespace _3DModelMax.Application.Services
         {
             var author = await _authorRepository.GetAuthor(authorRequest.NickName);
 
-            if (author != null && !VerifyPasswordHash(authorRequest.Password, author.PasswordHash, author.PasswordSalt))
+            if (author != null && VerifyPasswordHash(authorRequest.Password, author.PasswordHash, author.PasswordSalt))
             { 
                 var token = GenerateToken(author);
 
