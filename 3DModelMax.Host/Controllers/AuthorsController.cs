@@ -21,7 +21,7 @@ namespace _3DModelMax.Host.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Registration([FromBody] AuthorRegistrationDTO author)
+        public async Task<IActionResult> CreateAuthor([FromBody] CreateAuthorDTO author)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace _3DModelMax.Host.Controllers
                     return BadRequest();
                 }
 
-                await authorService.AuthorRegistration(author);
+                await authorService.CreateAuthor(author);
                 _logger.LogInformation("Author is created: " + author);
 
                 return Ok();

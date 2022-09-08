@@ -15,12 +15,12 @@ using System.Web;
 
 namespace _3DModelMax.Application.Services
 {
-    public class AuthenticateService : IAuthenticateService
+    public class AuthenticationService : IAuthenticationService
     {
         private readonly IAuthorRepository<Author> _authorRepository;
         private readonly IConfiguration _configuration;
 
-        public AuthenticateService(IAuthorRepository<Author> authorRepository, IConfiguration configuration)
+        public AuthenticationService(IAuthorRepository<Author> authorRepository, IConfiguration configuration)
         {
             _authorRepository = authorRepository;
             _configuration = configuration;
@@ -31,10 +31,13 @@ namespace _3DModelMax.Application.Services
             var author = await _authorRepository.GetAuthor(authorRequest.NickName);
 
             if (author != null)
-            {
-                var token = GenerateToken(author);
+            { 
+                if (!VerifyPasswordHash(authorRequest.Password, author.PasswordHash, author.PasswordSalt))
+                {
+                    var token = GenerateToken(author);
 
-                return token;
+                    return token;
+                }
             }
 
             return null;
@@ -62,8 +65,8 @@ namespace _3DModelMax.Application.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
-        public bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+                
+        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
             using (var hmac = new HMACSHA512(passwordSalt))
             {

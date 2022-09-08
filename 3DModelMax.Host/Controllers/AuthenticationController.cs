@@ -11,13 +11,13 @@ namespace _3DModelMax.Host.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthenticateController : ControllerBase
+    public class AuthenticationController : ControllerBase
     {
-        private IAuthenticateService _authenticateService;
+        private IAuthenticationService _authenticateService;
         private ILogger<AuthorsController> _logger;
         private readonly IAuthorRepository<Author> _authorRepository;
 
-        public AuthenticateController(IAuthenticateService authenticateService, 
+        public AuthenticationController(IAuthenticationService authenticateService, 
                                       ILogger<AuthorsController> logger, 
                                       IAuthorRepository<Author> authorRepository)
         {
@@ -38,12 +38,6 @@ namespace _3DModelMax.Host.Controllers
                 }
 
                 var token = await _authenticateService.Login(authorRequest);
-                var author = await _authorRepository.GetAuthor(authorRequest.NickName);
-
-                if (!_authenticateService.VerifyPasswordHash(authorRequest.Password, author.PasswordHash, author.PasswordSalt))
-                {
-                    return BadRequest("Wrong password.");
-                }
 
                 if (token == null)
                 {
@@ -115,6 +109,7 @@ namespace _3DModelMax.Host.Controllers
                 return StatusCode(500, "Failed to authorize author");
             }
         }
+
         private Author GetCurrentUser()
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;

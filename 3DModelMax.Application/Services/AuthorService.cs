@@ -21,7 +21,7 @@ namespace _3DModelMax.Application.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task AuthorRegistration(AuthorRegistrationDTO author)
+        public async Task CreateAuthor(CreateAuthorDTO author)
         {
             CreatePasswordHash(author.Password, out byte[] passwordHash, out byte[] passwordSalt);
 

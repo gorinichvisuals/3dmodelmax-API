@@ -40,7 +40,7 @@ public class Startup
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        services.AddScoped<IAuthenticateService, AuthenticateService>();
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options => {

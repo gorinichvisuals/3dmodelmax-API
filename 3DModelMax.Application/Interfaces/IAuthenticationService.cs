@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace _3DModelMax.Application.Interfaces
 {
-    public interface IAuthenticateService
+    public interface IAuthenticationService
     {
         Task<string> Login(LoginDTO authorRequest);
-        bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt);
     }
 }
 
