@@ -13,17 +13,13 @@ namespace _3DModelMax.Host.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private IAuthenticationService _authenticateService;
+        private IAuthenticationService _authenticationService;
         private ILogger<AuthorsController> _logger;
-        private readonly IAuthorRepository<Author> _authorRepository;
 
-        public AuthenticationController(IAuthenticationService authenticateService, 
-                                      ILogger<AuthorsController> logger, 
-                                      IAuthorRepository<Author> authorRepository)
+        public AuthenticationController(IAuthenticationService authenticationService, ILogger<AuthorsController> logger)
         {
-            _authenticateService = authenticateService;
+            _authenticationService = authenticationService;
             _logger = logger;
-            _authorRepository = authorRepository;
         }
 
         [AllowAnonymous]
@@ -37,7 +33,7 @@ namespace _3DModelMax.Host.Controllers
                     return BadRequest();
                 }
 
-                var token = await _authenticateService.Login(authorRequest);
+                var token = await _authenticationService.Login(authorRequest);
 
                 if (token == null)
                 {
